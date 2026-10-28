@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OcorrenciaController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\UtilizadorController;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,8 @@ Route::middleware('auth')->group(function () {
         ->except('show');
 
     Route::resource('alunos', AlunoController::class)->parameters(['alunos' => 'aluno']);
+
+    Route::resource('ocorrencias', OcorrenciaController::class)
+        ->parameters(['ocorrencias' => 'ocorrencia'])
+        ->except('show');
 });
