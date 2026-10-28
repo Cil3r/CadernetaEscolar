@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaltaController;
 use App\Http\Controllers\OcorrenciaController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\UtilizadorController;
@@ -34,5 +35,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('ocorrencias', OcorrenciaController::class)
         ->parameters(['ocorrencias' => 'ocorrencia'])
+        ->except('show');
+
+    Route::resource('faltas', FaltaController::class)
+        ->parameters(['faltas' => 'falta'])
         ->except('show');
 });
