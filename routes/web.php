@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\UtilizadorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,4 +19,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+    Route::resource('turmas', TurmaController::class)->parameters(['turmas' => 'turma']);
+    Route::post('/turmas/{turma}/professores', [TurmaController::class, 'associarProfessor'])->name('turmas.professores.associar');
+    Route::delete('/turmas/{turma}/professores/{professor}', [TurmaController::class, 'removerProfessor'])->name('turmas.professores.remover');
+
+    Route::resource('utilizadores', UtilizadorController::class)
+        ->parameters(['utilizadores' => 'utilizador'])
+        ->except('show');
 });
