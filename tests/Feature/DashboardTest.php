@@ -66,4 +66,45 @@ class DashboardTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_dashboard_mostra_apenas_dados_de_hoje_quando_filtrado(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+        $aluno = Aluno::factory()->create();
+        Ocorrencia::factory()->create(['aluno_id' => $aluno->id, 'data' => now()]);
+        Ocorrencia::factory()->create(['aluno_id' => $aluno->id, 'data' => now()->subDays(10)]);
+
+        $response = $this->actingAs($direcao)->get('/dashboard?'.http_build_query([
+            'de' => now()->format('Y-m-d'),
+            'ate' => now()->format('Y-m-d'),
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertViewHas('totalOcorrencias', 1);
+    }
+
+    public function test_dashboard_aceita_intervalo_de_datas_personalizado(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+        $aluno = Aluno::factory()->create();
+        Ocorrencia::factory()->create(['aluno_id' => $aluno->id, 'data' => now()->subDays(40)]);
+        Ocorrencia::factory()->create(['aluno_id' => $aluno->id, 'data' => now()->subDays(5)]);
+
+        $response = $this->actingAs($direcao)->get('/dashboard?'.http_build_query([
+            'de' => now()->subDays(45)->format('Y-m-d'),
+            'ate' => now()->format('Y-m-d'),
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertViewHas('totalOcorrencias', 2);
+    }
+
+    public function test_dashboard_rejeita_data_invalida(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+
+        $response = $this->actingAs($direcao)->get('/dashboard?de=nao-e-uma-data');
+
+        $response->assertSessionHasErrors('de');
+    }
 }
