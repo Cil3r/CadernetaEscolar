@@ -4,6 +4,12 @@
 
 @section('conteudo')
     <x-cabecalho-pagina :titulo="'Caderneta · '.$aluno->nome" descricao="{{ $aluno->numero_processo }} · {{ $aluno->turma?->nome ?? 'Sem turma' }}">
+        @can('create', App\Models\Ocorrencia::class)
+            <x-botao-link href="{{ route('ocorrencias.create', ['aluno_id' => $aluno->id]) }}">+ Nova ocorrência</x-botao-link>
+        @endcan
+        @can('create', App\Models\Falta::class)
+            <x-botao-link variante="secundario" href="{{ route('faltas.create', ['aluno_id' => $aluno->id]) }}">+ Nova falta</x-botao-link>
+        @endcan
         <x-botao-link variante="secundario" href="{{ route('alunos.show', $aluno) }}">Voltar ao aluno</x-botao-link>
     </x-cabecalho-pagina>
 
@@ -66,7 +72,20 @@
                             @endif
                             <p class="mt-1 text-xs text-marinho-600 dark:text-azul-claro-200">Registado por {{ $evento['modelo']->autor->name }}</p>
                         </div>
-                        <span class="shrink-0 text-sm text-marinho-600 dark:text-azul-claro-200">{{ $evento['data']->format('d/m/Y') }}</span>
+                        <div class="flex shrink-0 items-center gap-3">
+                            <span class="text-sm text-marinho-600 dark:text-azul-claro-200">{{ $evento['data']->format('d/m/Y') }}</span>
+                            @php $rotaBase = $evento['tipo'] === 'ocorrencia' ? 'ocorrencias' : 'faltas'; @endphp
+                            @can('update', $evento['modelo'])
+                                <a href="{{ route($rotaBase.'.edit', $evento['modelo']) }}" class="text-sm font-medium text-azul-500 hover:underline">Editar</a>
+                            @endcan
+                            @can('delete', $evento['modelo'])
+                                <form method="POST" action="{{ route($rotaBase.'.destroy', $evento['modelo']) }}" onsubmit="return confirm('Eliminar este registo?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-sm font-medium text-red-600 hover:underline dark:text-red-400">Eliminar</button>
+                                </form>
+                            @endcan
+                        </div>
                     </li>
                 @endforeach
             </ul>

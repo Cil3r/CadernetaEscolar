@@ -72,7 +72,9 @@
                     @foreach ($ocorrencias as $ocorrencia)
                         <tr>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $ocorrencia->data->format('d/m/Y') }}</td>
-                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">{{ $ocorrencia->aluno->nome }}</td>
+                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">
+                                <a href="{{ route('alunos.caderneta', $ocorrencia->aluno) }}" class="hover:underline">{{ $ocorrencia->aluno->nome }}</a>
+                            </td>
                             <td class="px-4 py-3 capitalize text-marinho-700 dark:text-azul-claro-200">{{ $ocorrencia->tipo }}</td>
                             <td class="px-4 py-3"><x-estrelas :valor="$ocorrencia->gravidade" /></td>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $ocorrencia->autor->name }}</td>

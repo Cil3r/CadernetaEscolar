@@ -26,7 +26,7 @@
                 <ul class="divide-y divide-black/5 dark:divide-white/10">
                     @foreach ($turma->alunos as $aluno)
                         <li class="flex items-center justify-between py-2 text-sm">
-                            <span class="text-marinho-900 dark:text-white">{{ $aluno->nome }}</span>
+                            <a href="{{ route('alunos.caderneta', $aluno) }}" class="text-marinho-900 hover:underline dark:text-white">{{ $aluno->nome }}</a>
                             <span class="text-marinho-600 dark:text-azul-claro-200">{{ $aluno->numero_processo }}</span>
                         </li>
                     @endforeach

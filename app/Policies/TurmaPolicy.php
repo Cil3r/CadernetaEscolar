@@ -14,7 +14,7 @@ class TurmaPolicy
 
     public function view(User $user, Turma $turma): bool
     {
-        if ($user->isDirecao()) {
+        if ($user->isGestor()) {
             return true;
         }
 
@@ -23,16 +23,16 @@ class TurmaPolicy
 
     public function create(User $user): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 
     public function update(User $user, Turma $turma): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 
     public function delete(User $user, Turma $turma): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 }

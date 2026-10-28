@@ -16,7 +16,7 @@ class UpdateAlunoRequest extends FormRequest
     {
         $regrasTurma = ['required', Rule::exists('turmas', 'id')];
 
-        if (! $this->user()->isDirecao()) {
+        if (! $this->user()->isGestor()) {
             $regrasTurma[] = Rule::in($this->user()->turmas()->pluck('turmas.id'));
         }
 

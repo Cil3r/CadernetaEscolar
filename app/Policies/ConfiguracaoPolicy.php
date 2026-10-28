@@ -9,11 +9,11 @@ class ConfiguracaoPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 
     public function update(User $user, Configuracao $configuracao): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 }

@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $ocorrenciasQuery = Ocorrencia::query()->where('data', '>=', $desde);
         $faltasQuery = Falta::query()->where('data', '>=', $desde);
 
-        if (! $user->isDirecao()) {
+        if (! $user->isGestor()) {
             $turmaIds = $user->turmas()->pluck('turmas.id');
             $turmasQuery->whereKey($turmaIds);
             $alunosQuery->whereIn('turma_id', $turmaIds);
@@ -39,7 +39,7 @@ class DashboardController extends Controller
         $limiteFaltas = (int) Configuracao::obter('limite_faltas', 10);
         $limiteGravidade = (int) Configuracao::obter('limite_gravidade', 4);
 
-        $alunosBase = $user->isDirecao() ? Aluno::query() : Aluno::query()->whereIn('turma_id', $user->turmas()->pluck('turmas.id'));
+        $alunosBase = $user->isGestor() ? Aluno::query() : Aluno::query()->whereIn('turma_id', $user->turmas()->pluck('turmas.id'));
 
         $alunosEmAlerta = (clone $alunosBase)
             ->with('turma')

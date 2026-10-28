@@ -18,7 +18,7 @@ class OcorrenciaController extends Controller
 
         $query = Ocorrencia::query()->with(['aluno.turma', 'autor'])->orderByDesc('data');
 
-        if (! $user->isDirecao()) {
+        if (! $user->isGestor()) {
             $query->whereHas('aluno', fn ($q) => $q->whereIn('turma_id', $user->turmas()->pluck('turmas.id')));
         }
 
@@ -97,7 +97,7 @@ class OcorrenciaController extends Controller
     {
         $query = Aluno::query()->orderBy('nome');
 
-        if (! $user->isDirecao()) {
+        if (! $user->isGestor()) {
             $query->whereIn('turma_id', $user->turmas()->pluck('turmas.id'));
         }
 

@@ -75,7 +75,9 @@
                     @foreach ($faltas as $falta)
                         <tr>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $falta->data->format('d/m/Y') }}</td>
-                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">{{ $falta->aluno->nome }}</td>
+                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">
+                                <a href="{{ route('alunos.caderneta', $falta->aluno) }}" class="hover:underline">{{ $falta->aluno->nome }}</a>
+                            </td>
                             <td class="px-4 py-3">
                                 @if ($falta->justificada)
                                     <span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-300">Justificada</span>

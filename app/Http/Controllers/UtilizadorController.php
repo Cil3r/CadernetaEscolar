@@ -6,17 +6,22 @@ use App\Http\Requests\Utilizador\StoreUtilizadorRequest;
 use App\Http\Requests\Utilizador\UpdateUtilizadorRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class UtilizadorController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', User::class);
 
-        $utilizadores = User::orderBy('name')->paginate(10);
+        $query = User::orderBy('name');
 
-        return view('utilizadores.index', ['utilizadores' => $utilizadores]);
+        if (! $request->user()->isSuperAdmin()) {
+            $query->where('perfil', 'professor');
+        }
+
+        return view('utilizadores.index', ['utilizadores' => $query->paginate(10)]);
     }
 
     public function create(): View

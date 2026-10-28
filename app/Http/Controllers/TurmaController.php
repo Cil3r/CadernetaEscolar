@@ -15,7 +15,7 @@ class TurmaController extends Controller
 {
     public function index(Request $request): View
     {
-        $turmas = $request->user()->isDirecao()
+        $turmas = $request->user()->isGestor()
             ? Turma::withCount('alunos')->orderBy('nome')->paginate(10)
             : $request->user()->turmas()->withCount('alunos')->orderBy('nome')->paginate(10);
 

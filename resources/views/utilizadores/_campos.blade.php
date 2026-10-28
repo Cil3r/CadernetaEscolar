@@ -8,7 +8,10 @@
 
 <x-campo name="perfil" label="Perfil" type="select" required :value="$utilizador?->perfil">
     <option value="professor" @selected(old('perfil', $utilizador?->perfil) === 'professor')>Professor</option>
-    <option value="direcao" @selected(old('perfil', $utilizador?->perfil) === 'direcao')>Direção</option>
+    @if (auth()->user()->isSuperAdmin())
+        <option value="direcao" @selected(old('perfil', $utilizador?->perfil) === 'direcao')>Direção</option>
+        <option value="super_admin" @selected(old('perfil', $utilizador?->perfil) === 'super_admin')>Super Admin</option>
+    @endif
 </x-campo>
 
 <label class="flex items-center gap-2 text-sm text-marinho-700 dark:text-azul-claro-200">

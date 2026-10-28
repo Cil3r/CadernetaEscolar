@@ -38,7 +38,7 @@ class StoreFaltaRequest extends FormRequest
     public function withValidator(Validator $validator): void
     {
         $validator->after(function ($validator) {
-            if ($this->user()->isDirecao() || ! $this->filled('aluno_id')) {
+            if ($this->user()->isGestor() || ! $this->filled('aluno_id')) {
                 return;
             }
 

@@ -43,7 +43,9 @@
                 <tbody class="divide-y divide-black/5 dark:divide-white/10">
                     @foreach ($alunos as $aluno)
                         <tr>
-                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">{{ $aluno->nome }}</td>
+                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">
+                                <a href="{{ route('alunos.caderneta', $aluno) }}" class="hover:underline" title="Ver caderneta">{{ $aluno->nome }}</a>
+                            </td>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $aluno->numero_processo }}</td>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $aluno->turma?->nome ?? '—' }}</td>
                             <td class="px-4 py-3">
@@ -54,7 +56,7 @@
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-right">
-                                <a href="{{ route('alunos.show', $aluno) }}" class="text-sm font-medium text-azul-500 hover:underline">Ver</a>
+                                <a href="{{ route('alunos.show', $aluno) }}" class="text-sm font-medium text-azul-500 hover:underline">Dados</a>
                             </td>
                         </tr>
                     @endforeach

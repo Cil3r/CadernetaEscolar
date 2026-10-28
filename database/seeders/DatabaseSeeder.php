@@ -14,6 +14,13 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@caderneta.ao',
+            'password' => 'password',
+            'perfil' => 'super_admin',
+        ]);
+
         $direcao = User::create([
             'name' => 'Direção Geral',
             'email' => 'direcao@caderneta.ao',

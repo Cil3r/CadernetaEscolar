@@ -29,12 +29,12 @@ class AlunoPolicy
 
     public function delete(User $user, Aluno $aluno): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 
     private function pertenceAsTurmasDoProfessor(User $user, Aluno $aluno): bool
     {
-        if ($user->isDirecao()) {
+        if ($user->isGestor()) {
             return true;
         }
 

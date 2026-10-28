@@ -4,6 +4,7 @@ namespace App\Http\Requests\Utilizador;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUtilizadorRequest extends FormRequest
 {
@@ -14,11 +15,15 @@ class StoreUtilizadorRequest extends FormRequest
 
     public function rules(): array
     {
+        $perfisPermitidos = $this->user()->isSuperAdmin()
+            ? ['super_admin', 'direcao', 'professor']
+            : ['professor'];
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
-            'perfil' => ['required', 'in:direcao,professor'],
+            'perfil' => ['required', Rule::in($perfisPermitidos)],
             'ativo' => ['boolean'],
         ];
     }
