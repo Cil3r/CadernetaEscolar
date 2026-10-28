@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TurmaController;
@@ -27,4 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('utilizadores', UtilizadorController::class)
         ->parameters(['utilizadores' => 'utilizador'])
         ->except('show');
+
+    Route::resource('alunos', AlunoController::class)->parameters(['alunos' => 'aluno']);
 });

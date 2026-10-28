@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Aluno extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'numero_processo', 'nome', 'data_nascimento', 'genero',
         'encarregado_nome', 'encarregado_contacto', 'turma_id', 'ativo',
