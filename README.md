@@ -32,10 +32,20 @@ DB_PASSWORD=caderneta123
 ```
 Depois:
 ```bash
-php artisan migrate
-npm run dev        # num terminal
-php artisan serve  # noutro terminal
+php artisan migrate --seed
+php artisan storage:link   # necessário para as fotos de perfil
+npm run build               # ou: npm run dev, num terminal à parte
+php artisan serve
 ```
+
+### Contas de teste (criadas pelo seeder)
+| Perfil | Email | Senha |
+|---|---|---|
+| Super Admin | superadmin@caderneta.ao | password |
+| Direção | direcao@caderneta.ao | password |
+| Professor | professor@caderneta.ao | password |
+
+Qualquer pessoa pode também criar a sua própria conta em `/registar` — fica como professor e inativa até a direção ou o super admin a ativar em Utilizadores.
 
 ## Fluxo Git
 - `main`: versão estável
