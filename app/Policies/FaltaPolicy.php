@@ -24,7 +24,7 @@ class FaltaPolicy
 
     public function update(User $user, Falta $falta): bool
     {
-        if ($user->isDirecao()) {
+        if ($user->isGestor()) {
             return true;
         }
 
@@ -38,7 +38,7 @@ class FaltaPolicy
 
     private function lecionaATurmaDoAluno(User $user, Falta $falta): bool
     {
-        if ($user->isDirecao()) {
+        if ($user->isGestor()) {
             return true;
         }
 

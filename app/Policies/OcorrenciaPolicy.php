@@ -24,7 +24,7 @@ class OcorrenciaPolicy
 
     public function update(User $user, Ocorrencia $ocorrencia): bool
     {
-        if ($user->isDirecao()) {
+        if ($user->isGestor()) {
             return true;
         }
 
@@ -38,7 +38,7 @@ class OcorrenciaPolicy
 
     private function lecionaATurmaDoAluno(User $user, Ocorrencia $ocorrencia): bool
     {
-        if ($user->isDirecao()) {
+        if ($user->isGestor()) {
             return true;
         }
 

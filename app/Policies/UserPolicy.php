@@ -8,26 +8,39 @@ class UserPolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 
     public function view(User $user, User $model): bool
     {
-        return $user->isDirecao();
+        return $this->podeGerir($user, $model);
     }
 
     public function create(User $user): bool
     {
-        return $user->isDirecao();
+        return $user->isGestor();
     }
 
     public function update(User $user, User $model): bool
     {
-        return $user->isDirecao();
+        return $this->podeGerir($user, $model);
     }
 
     public function delete(User $user, User $model): bool
     {
-        return $user->isDirecao() && $user->isNot($model);
+        return $user->isNot($model) && $this->podeGerir($user, $model);
+    }
+
+    private function podeGerir(User $user, User $model): bool
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($user->isDirecao()) {
+            return $model->isProfessor();
+        }
+
+        return false;
     }
 }

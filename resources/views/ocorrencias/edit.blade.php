@@ -24,7 +24,7 @@
 
             <x-estrelas-input :valor="$ocorrencia->gravidade" />
 
-            <x-campo name="descricao" label="Descrição" type="textarea" rows="4" required :value="$ocorrencia->descricao" />
+            <x-campo name="descricao" label="Descrição (o que aconteceu ou o que o aluno fez)" type="textarea" rows="4" required :value="$ocorrencia->descricao" />
 
             <div class="flex justify-end gap-2">
                 <x-botao-link variante="secundario" href="{{ route('ocorrencias.index') }}">Cancelar</x-botao-link>

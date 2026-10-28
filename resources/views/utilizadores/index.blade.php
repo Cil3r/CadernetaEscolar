@@ -3,11 +3,15 @@
 @section('titulo', 'Utilizadores')
 
 @section('conteudo')
-    <x-cabecalho-pagina titulo="Utilizadores" descricao="Contas de direção e professores.">
+    <x-cabecalho-pagina titulo="Utilizadores" :descricao="auth()->user()->isSuperAdmin() ? 'Contas de super admin, direção e professores.' : 'Contas de professores.'">
         <x-botao-link href="{{ route('utilizadores.create') }}">+ Novo utilizador</x-botao-link>
     </x-cabecalho-pagina>
 
     <x-alerta />
+
+    @php
+        $rotulosPerfil = ['super_admin' => 'Super Admin', 'direcao' => 'Direção', 'professor' => 'Professor'];
+    @endphp
 
     @if ($utilizadores->isEmpty())
         <x-estado-vazio icone="👥" titulo="Ainda não existem utilizadores" />
@@ -28,7 +32,7 @@
                         <tr>
                             <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">{{ $utilizador->name }}</td>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $utilizador->email }}</td>
-                            <td class="px-4 py-3 capitalize text-marinho-700 dark:text-azul-claro-200">{{ $utilizador->perfil }}</td>
+                            <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $rotulosPerfil[$utilizador->perfil] ?? $utilizador->perfil }}</td>
                             <td class="px-4 py-3">
                                 @if ($utilizador->ativo)
                                     <span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-300">Ativo</span>
@@ -37,14 +41,16 @@
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-right">
-                                <a href="{{ route('utilizadores.edit', $utilizador) }}" class="text-sm font-medium text-azul-500 hover:underline">Editar</a>
-                                @if (! $utilizador->is(auth()->user()))
+                                @can('update', $utilizador)
+                                    <a href="{{ route('utilizadores.edit', $utilizador) }}" class="text-sm font-medium text-azul-500 hover:underline">Editar</a>
+                                @endcan
+                                @can('delete', $utilizador)
                                     <form method="POST" action="{{ route('utilizadores.destroy', $utilizador) }}" class="inline" onsubmit="return confirm('Eliminar este utilizador?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="ml-3 text-sm font-medium text-red-600 hover:underline dark:text-red-400">Eliminar</button>
                                     </form>
-                                @endif
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

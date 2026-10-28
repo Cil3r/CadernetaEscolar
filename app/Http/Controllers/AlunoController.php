@@ -18,7 +18,7 @@ class AlunoController extends Controller
 
         $query = Aluno::query()->with('turma')->orderBy('nome');
 
-        if (! $user->isDirecao()) {
+        if (! $user->isGestor()) {
             $query->whereIn('turma_id', $user->turmas()->pluck('turmas.id'));
         }
 
@@ -32,7 +32,7 @@ class AlunoController extends Controller
                 ->orWhere('numero_processo', 'like', "%{$pesquisa}%"));
         }
 
-        $turmasDisponiveis = $user->isDirecao()
+        $turmasDisponiveis = $user->isGestor()
             ? Turma::orderBy('nome')->get()
             : $user->turmas()->orderBy('nome')->get();
 
@@ -46,7 +46,7 @@ class AlunoController extends Controller
     {
         $this->authorize('create', Aluno::class);
 
-        $turmasDisponiveis = $request->user()->isDirecao()
+        $turmasDisponiveis = $request->user()->isGestor()
             ? Turma::orderBy('nome')->get()
             : $request->user()->turmas()->orderBy('nome')->get();
 
@@ -76,7 +76,7 @@ class AlunoController extends Controller
     {
         $this->authorize('update', $aluno);
 
-        $turmasDisponiveis = $request->user()->isDirecao()
+        $turmasDisponiveis = $request->user()->isGestor()
             ? Turma::orderBy('nome')->get()
             : $request->user()->turmas()->orderBy('nome')->get();
 

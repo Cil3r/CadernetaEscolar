@@ -15,7 +15,7 @@
         <x-estado-vazio
             icone="🏫"
             titulo="Ainda não existem turmas"
-            :descricao="auth()->user()->isDirecao() ? 'Comece por criar a primeira turma da instituição.' : 'Ainda não lhe foram atribuídas turmas.'"
+            :descricao="auth()->user()->isGestor() ? 'Comece por criar a primeira turma da instituição.' : 'Ainda não lhe foram atribuídas turmas.'"
         >
             @can('create', App\Models\Turma::class)
                 <a href="{{ route('turmas.create') }}" class="text-sm font-medium text-azul-500 hover:underline">Criar turma</a>

@@ -14,11 +14,15 @@ class UpdateUtilizadorRequest extends FormRequest
 
     public function rules(): array
     {
+        $perfisPermitidos = $this->user()->isSuperAdmin()
+            ? ['super_admin', 'direcao', 'professor']
+            : ['professor'];
+
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->route('utilizador'))],
             'password' => ['nullable', 'string', 'min:8'],
-            'perfil' => ['required', 'in:direcao,professor'],
+            'perfil' => ['required', Rule::in($perfisPermitidos)],
             'ativo' => ['boolean'],
         ];
     }

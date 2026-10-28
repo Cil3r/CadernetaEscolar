@@ -59,4 +59,9 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => ['ativo' => false]);
     }
+
+    public function superAdmin(): static
+    {
+        return $this->state(fn (array $attributes) => ['perfil' => 'super_admin']);
+    }
 }

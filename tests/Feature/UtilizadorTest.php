@@ -66,4 +66,57 @@ class UtilizadorTest extends TestCase
         $response->assertRedirect(route('utilizadores.index'));
         $this->assertDatabaseMissing('users', ['id' => $professor->id]);
     }
+
+    public function test_direcao_nao_pode_gerir_outra_conta_de_direcao(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+        $outraDirecao = User::factory()->direcao()->create();
+
+        $this->actingAs($direcao)->get("/utilizadores/{$outraDirecao->id}/edit")->assertForbidden();
+        $this->actingAs($direcao)->delete("/utilizadores/{$outraDirecao->id}")->assertForbidden();
+        $this->assertDatabaseHas('users', ['id' => $outraDirecao->id]);
+    }
+
+    public function test_direcao_nao_pode_criar_conta_de_direcao_ou_super_admin(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+
+        $response = $this->actingAs($direcao)->post('/utilizadores', [
+            'name' => 'Tentativa',
+            'email' => 'tentativa@caderneta.ao',
+            'password' => 'password123',
+            'perfil' => 'direcao',
+            'ativo' => '1',
+        ]);
+
+        $response->assertSessionHasErrors('perfil');
+        $this->assertDatabaseMissing('users', ['email' => 'tentativa@caderneta.ao']);
+    }
+
+    public function test_super_admin_pode_gerir_qualquer_conta(): void
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $direcao = User::factory()->direcao()->create();
+
+        $resposta = $this->actingAs($superAdmin)->put("/utilizadores/{$direcao->id}", [
+            'name' => $direcao->name,
+            'email' => $direcao->email,
+            'perfil' => 'direcao',
+            'ativo' => '1',
+        ]);
+        $resposta->assertRedirect(route('utilizadores.index'));
+
+        $this->actingAs($superAdmin)->delete("/utilizadores/{$direcao->id}")->assertRedirect(route('utilizadores.index'));
+        $this->assertDatabaseMissing('users', ['id' => $direcao->id]);
+    }
+
+    public function test_lista_de_direcao_mostra_apenas_professores(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+        $outraDirecao = User::factory()->direcao()->create(['name' => 'Outra Direção']);
+
+        $response = $this->actingAs($direcao)->get('/utilizadores');
+
+        $response->assertDontSee('Outra Direção');
+    }
 }

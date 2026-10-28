@@ -30,7 +30,7 @@
 
             <x-estrelas-input />
 
-            <x-campo name="descricao" label="Descrição" type="textarea" rows="4" required />
+            <x-campo name="descricao" label="Descrição (o que aconteceu ou o que o aluno fez)" type="textarea" rows="4" required />
 
             <div class="flex justify-end gap-2">
                 <x-botao-link variante="secundario" href="{{ route('ocorrencias.index') }}">Cancelar</x-botao-link>

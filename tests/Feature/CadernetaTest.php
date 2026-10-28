@@ -54,4 +54,38 @@ class CadernetaTest extends TestCase
 
         $response->assertSee('limite de 2 faltas injustificadas');
     }
+
+    public function test_caderneta_tem_acoes_rapidas_para_criar_ocorrencia_e_falta(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+        $aluno = Aluno::factory()->create();
+
+        $response = $this->actingAs($direcao)->get("/alunos/{$aluno->id}/caderneta");
+
+        $response->assertSee(route('ocorrencias.create', ['aluno_id' => $aluno->id]), false);
+        $response->assertSee(route('faltas.create', ['aluno_id' => $aluno->id]), false);
+    }
+
+    public function test_nome_do_aluno_na_lista_liga_para_a_caderneta(): void
+    {
+        $direcao = User::factory()->direcao()->create();
+        $aluno = Aluno::factory()->create();
+
+        $response = $this->actingAs($direcao)->get('/alunos');
+
+        $response->assertSee(route('alunos.caderneta', $aluno), false);
+    }
+
+    public function test_professor_pode_editar_ocorrencia_propria_a_partir_da_caderneta(): void
+    {
+        $professor = User::factory()->professor()->create();
+        $turma = Turma::factory()->create();
+        $turma->professores()->attach($professor->id);
+        $aluno = Aluno::factory()->create(['turma_id' => $turma->id]);
+        $ocorrencia = Ocorrencia::factory()->create(['aluno_id' => $aluno->id, 'user_id' => $professor->id]);
+
+        $response = $this->actingAs($professor)->get("/alunos/{$aluno->id}/caderneta");
+
+        $response->assertSee(route('ocorrencias.edit', $ocorrencia), false);
+    }
 }

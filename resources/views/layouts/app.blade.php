@@ -18,14 +18,16 @@
 <body class="bg-azul-claro-100 text-marinho-950 antialiased dark:bg-marinho-950 dark:text-white">
     @php
         $navegacao = [
-            ['rota' => 'dashboard', 'label' => 'Dashboard', 'icone' => '🏠', 'perfis' => ['direcao', 'professor']],
-            ['rota' => 'turmas.index', 'label' => 'Turmas', 'icone' => '🏫', 'perfis' => ['direcao', 'professor']],
-            ['rota' => 'alunos.index', 'label' => 'Alunos', 'icone' => '🎓', 'perfis' => ['direcao', 'professor']],
-            ['rota' => 'ocorrencias.index', 'label' => 'Ocorrências', 'icone' => '⭐', 'perfis' => ['direcao', 'professor']],
-            ['rota' => 'faltas.index', 'label' => 'Faltas', 'icone' => '📅', 'perfis' => ['direcao', 'professor']],
-            ['rota' => 'utilizadores.index', 'label' => 'Utilizadores', 'icone' => '👥', 'perfis' => ['direcao']],
-            ['rota' => 'configuracoes.index', 'label' => 'Configurações', 'icone' => '⚙️', 'perfis' => ['direcao']],
+            ['rota' => 'dashboard', 'label' => 'Dashboard', 'icone' => '🏠', 'perfis' => ['direcao', 'professor', 'super_admin']],
+            ['rota' => 'turmas.index', 'label' => 'Turmas', 'icone' => '🏫', 'perfis' => ['direcao', 'professor', 'super_admin']],
+            ['rota' => 'alunos.index', 'label' => 'Alunos', 'icone' => '🎓', 'perfis' => ['direcao', 'professor', 'super_admin']],
+            ['rota' => 'ocorrencias.index', 'label' => 'Ocorrências', 'icone' => '⭐', 'perfis' => ['direcao', 'professor', 'super_admin']],
+            ['rota' => 'faltas.index', 'label' => 'Faltas', 'icone' => '📅', 'perfis' => ['direcao', 'professor', 'super_admin']],
+            ['rota' => 'utilizadores.index', 'label' => 'Utilizadores', 'icone' => '👥', 'perfis' => ['direcao', 'super_admin']],
+            ['rota' => 'configuracoes.index', 'label' => 'Configurações', 'icone' => '⚙️', 'perfis' => ['direcao', 'super_admin']],
         ];
+
+        $rotulosPerfil = ['super_admin' => 'Super Admin', 'direcao' => 'Direção', 'professor' => 'Professor'];
     @endphp
 
     <div data-sobreposicao-menu class="fixed inset-0 z-30 hidden bg-black/40 lg:hidden"></div>
@@ -122,11 +124,16 @@
                             </span>
                             <span class="hidden text-left sm:block">
                                 <span class="block text-sm font-medium text-marinho-900 dark:text-white">{{ auth()->user()->name }}</span>
-                                <span class="block text-xs text-marinho-600 dark:text-azul-claro-200">{{ auth()->user()->perfil === 'direcao' ? 'Direção' : 'Professor' }}</span>
+                                <span class="block text-xs text-marinho-600 dark:text-azul-claro-200">{{ $rotulosPerfil[auth()->user()->perfil] ?? auth()->user()->perfil }}</span>
                             </span>
                         </button>
 
                         <div data-dropdown-painel="perfil" class="absolute right-0 z-30 mt-2 hidden w-48 rounded-xl border border-black/5 bg-white p-2 text-sm shadow-xl dark:border-white/10 dark:bg-marinho-800">
+                            @if (Route::has('perfil.edit'))
+                                <a href="{{ route('perfil.edit') }}" class="block rounded-lg px-3 py-2 text-left text-marinho-800 transition hover:bg-azul-claro-100 dark:text-azul-claro-200 dark:hover:bg-white/10">
+                                    O meu perfil
+                                </a>
+                            @endif
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="w-full rounded-lg px-3 py-2 text-left text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10">

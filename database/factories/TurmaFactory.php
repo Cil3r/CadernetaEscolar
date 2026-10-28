@@ -15,7 +15,7 @@ class TurmaFactory extends Factory
     public function definition(): array
     {
         return [
-            'nome' => fake()->numberBetween(7, 12).'.ª '.fake()->randomElement(['A', 'B', 'C']),
+            'nome' => fake()->numberBetween(7, 12).'.ª '.fake()->unique()->bothify('Turma-##??'),
             'classe' => fake()->numberBetween(7, 12).'.ª Classe',
             'curso' => fake()->randomElement(['Informática', 'Ciências Físicas e Biológicas', 'Económico-Jurídico']),
             'ano_letivo' => '2026/2027',

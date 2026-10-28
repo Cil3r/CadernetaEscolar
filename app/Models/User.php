@@ -46,4 +46,14 @@ class User extends Authenticatable
     {
         return $this->perfil === 'professor';
     }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->perfil === 'super_admin';
+    }
+
+    public function isGestor(): bool
+    {
+        return $this->isDirecao() || $this->isSuperAdmin();
+    }
 }
