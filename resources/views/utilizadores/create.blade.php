@@ -8,7 +8,7 @@
     <x-alerta />
 
     <x-cartao class="max-w-xl">
-        <form method="POST" action="{{ route('utilizadores.store') }}" class="space-y-5">
+        <form method="POST" action="{{ route('utilizadores.store') }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
             @include('utilizadores._campos')
 

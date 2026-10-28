@@ -30,7 +30,12 @@
                 <tbody class="divide-y divide-black/5 dark:divide-white/10">
                     @foreach ($utilizadores as $utilizador)
                         <tr>
-                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">{{ $utilizador->name }}</td>
+                            <td class="px-4 py-3 font-medium text-marinho-900 dark:text-white">
+                                <div class="flex items-center gap-3">
+                                    <x-avatar :user="$utilizador" tamanho="h-8 w-8" />
+                                    {{ $utilizador->name }}
+                                </div>
+                            </td>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $utilizador->email }}</td>
                             <td class="px-4 py-3 text-marinho-700 dark:text-azul-claro-200">{{ $rotulosPerfil[$utilizador->perfil] ?? $utilizador->perfil }}</td>
                             <td class="px-4 py-3">

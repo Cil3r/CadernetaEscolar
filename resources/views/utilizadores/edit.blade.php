@@ -8,7 +8,7 @@
     <x-alerta />
 
     <x-cartao class="max-w-xl">
-        <form method="POST" action="{{ route('utilizadores.update', $utilizador) }}" class="space-y-5">
+        <form method="POST" action="{{ route('utilizadores.update', $utilizador) }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
             @method('PUT')
             @include('utilizadores._campos')

@@ -119,9 +119,7 @@
                             data-dropdown-botao="perfil"
                             class="flex items-center gap-2 rounded-lg px-2 py-1.5 transition hover:bg-azul-claro-100 dark:hover:bg-white/10"
                         >
-                            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-marinho-900 text-sm font-semibold text-white dark:bg-azul-500">
-                                {{ Str::upper(Str::substr(auth()->user()->name, 0, 1)) }}
-                            </span>
+                            <x-avatar :user="auth()->user()" />
                             <span class="hidden text-left sm:block">
                                 <span class="block text-sm font-medium text-marinho-900 dark:text-white">{{ auth()->user()->name }}</span>
                                 <span class="block text-xs text-marinho-600 dark:text-azul-claro-200">{{ $rotulosPerfil[auth()->user()->perfil] ?? auth()->user()->perfil }}</span>

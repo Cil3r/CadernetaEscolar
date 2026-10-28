@@ -7,6 +7,7 @@ use App\Http\Requests\Utilizador\UpdateUtilizadorRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class UtilizadorController extends Controller
@@ -33,11 +34,14 @@ class UtilizadorController extends Controller
 
     public function store(StoreUtilizadorRequest $request): RedirectResponse
     {
-        User::create([
-            ...$request->validated(),
-            'ativo' => $request->boolean('ativo', true),
-            'password' => $request->validated('password'),
-        ]);
+        $dados = $request->validated();
+        $dados['ativo'] = $request->boolean('ativo', true);
+
+        if ($request->hasFile('foto')) {
+            $dados['foto'] = $request->file('foto')->store('avatares', 'public');
+        }
+
+        User::create($dados);
 
         return redirect()->route('utilizadores.index')->with('sucesso', 'Utilizador criado com sucesso.');
     }
@@ -58,6 +62,16 @@ class UtilizadorController extends Controller
         }
 
         $dados['ativo'] = $request->boolean('ativo');
+
+        if ($request->hasFile('foto')) {
+            if ($utilizador->foto) {
+                Storage::disk('public')->delete($utilizador->foto);
+            }
+
+            $dados['foto'] = $request->file('foto')->store('avatares', 'public');
+        } else {
+            unset($dados['foto']);
+        }
 
         $utilizador->update($dados);
 

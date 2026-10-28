@@ -24,6 +24,7 @@ class UpdateUtilizadorRequest extends FormRequest
             'password' => ['nullable', 'string', 'min:8'],
             'perfil' => ['required', Rule::in($perfisPermitidos)],
             'ativo' => ['boolean'],
+            'foto' => ['nullable', 'image', 'max:2048'],
         ];
     }
 
@@ -35,6 +36,8 @@ class UpdateUtilizadorRequest extends FormRequest
             'email.unique' => 'Já existe um utilizador com este email.',
             'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
             'perfil.required' => 'Escolha o perfil do utilizador.',
+            'foto.image' => 'A foto deve ser uma imagem (jpg, png ou webp).',
+            'foto.max' => 'A foto não pode exceder 2 MB.',
         ];
     }
 }
