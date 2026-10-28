@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Utilizador;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUtilizadorRequest extends FormRequest
 {

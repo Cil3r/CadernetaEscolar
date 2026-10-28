@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Ocorrencia;
 
 use App\Models\Aluno;
+use App\Models\Ocorrencia;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
@@ -11,7 +12,7 @@ class StoreOcorrenciaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', \App\Models\Ocorrencia::class);
+        return $this->user()->can('create', Ocorrencia::class);
     }
 
     public function rules(): array

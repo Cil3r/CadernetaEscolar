@@ -42,12 +42,12 @@ class DatabaseSeeder extends Seeder
 
         foreach ($nomes as $i => $nome) {
             $aluno = Aluno::create([
-                'numero_processo' => 'P' . str_pad($i + 1, 4, '0', STR_PAD_LEFT),
+                'numero_processo' => 'P'.str_pad($i + 1, 4, '0', STR_PAD_LEFT),
                 'nome' => $nome,
-                'data_nascimento' => '2010-0' . ($i + 1) . '-15',
+                'data_nascimento' => '2010-0'.($i + 1).'-15',
                 'genero' => $i % 2 === 0 ? 'F' : 'M',
-                'encarregado_nome' => 'Encarregado de ' . $nome,
-                'encarregado_contacto' => '9230000' . str_pad($i, 2, '0', STR_PAD_LEFT),
+                'encarregado_nome' => 'Encarregado de '.$nome,
+                'encarregado_contacto' => '9230000'.str_pad($i, 2, '0', STR_PAD_LEFT),
                 'turma_id' => $turma->id,
             ]);
 
@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $professor->id,
                 'data' => now()->subDays($i + 1),
                 'tipo' => 'comportamento',
-                'descricao' => 'Ocorrência de exemplo para ' . $nome,
+                'descricao' => 'Ocorrência de exemplo para '.$nome,
                 'gravidade' => ($i % 5) + 1,
             ]);
 

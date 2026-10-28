@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CadernetaController;
+use App\Http\Controllers\ConfiguracaoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaltaController;
 use App\Http\Controllers\OcorrenciaController;
@@ -42,4 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('faltas', FaltaController::class)
         ->parameters(['faltas' => 'falta'])
         ->except('show');
+
+    Route::get('/configuracoes', [ConfiguracaoController::class, 'index'])->name('configuracoes.index');
+    Route::put('/configuracoes', [ConfiguracaoController::class, 'update'])->name('configuracoes.update');
 });
