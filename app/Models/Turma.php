@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Turma extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['nome', 'classe', 'curso', 'ano_letivo', 'periodo'];
 
     public function alunos(): HasMany
