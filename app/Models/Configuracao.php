@@ -14,4 +14,9 @@ class Configuracao extends Model
     {
         return static::where('chave', $chave)->value('valor') ?? $padrao;
     }
+
+    public static function definir(string $chave, $valor): void
+    {
+        static::updateOrCreate(['chave' => $chave], ['valor' => $valor]);
+    }
 }

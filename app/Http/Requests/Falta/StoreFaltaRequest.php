@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Falta;
 
 use App\Models\Aluno;
+use App\Models\Falta;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
@@ -11,7 +12,7 @@ class StoreFaltaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', \App\Models\Falta::class);
+        return $this->user()->can('create', Falta::class);
     }
 
     public function rules(): array

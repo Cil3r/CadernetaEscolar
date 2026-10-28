@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Aluno;
 
+use App\Models\Aluno;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -9,7 +10,7 @@ class StoreAlunoRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', \App\Models\Aluno::class);
+        return $this->user()->can('create', Aluno::class);
     }
 
     public function rules(): array

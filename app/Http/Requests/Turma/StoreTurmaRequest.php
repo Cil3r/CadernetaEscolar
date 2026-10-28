@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Turma;
 
+use App\Models\Turma;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTurmaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('create', \App\Models\Turma::class);
+        return $this->user()->can('create', Turma::class);
     }
 
     public function rules(): array
