@@ -7,6 +7,7 @@ use App\Http\Controllers\ConfiguracaoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaltaController;
 use App\Http\Controllers\OcorrenciaController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\UtilizadorController;
 use Illuminate\Support\Facades\Route;
@@ -46,4 +47,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/configuracoes', [ConfiguracaoController::class, 'index'])->name('configuracoes.index');
     Route::put('/configuracoes', [ConfiguracaoController::class, 'update'])->name('configuracoes.update');
+
+    Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
+    Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
 });

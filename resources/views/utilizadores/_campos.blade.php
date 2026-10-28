@@ -1,5 +1,23 @@
 @php $utilizador = $utilizador ?? null; @endphp
 
+@if ($utilizador)
+    <div class="flex items-center gap-4">
+        <x-avatar :user="$utilizador" tamanho="h-14 w-14" texto="text-lg" />
+        <div class="flex-1">
+            <label for="foto" class="mb-1 block text-sm font-medium text-marinho-800 dark:text-azul-claro-200">Foto de perfil</label>
+            <input id="foto" name="foto" type="file" accept="image/*" class="block w-full text-sm text-marinho-700 dark:text-azul-claro-200">
+        </div>
+    </div>
+@else
+    <div>
+        <label for="foto" class="mb-1 block text-sm font-medium text-marinho-800 dark:text-azul-claro-200">Foto de perfil (opcional)</label>
+        <input id="foto" name="foto" type="file" accept="image/*" class="block w-full text-sm text-marinho-700 dark:text-azul-claro-200">
+    </div>
+@endif
+@error('foto')
+    <p class="text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+@enderror
+
 <x-campo name="name" label="Nome completo" required :value="$utilizador?->name" />
 
 <x-campo name="email" label="Email" type="email" required :value="$utilizador?->email" />
