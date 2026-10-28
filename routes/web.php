@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\CadernetaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaltaController;
 use App\Http\Controllers\OcorrenciaController;
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
         ->except('show');
 
     Route::resource('alunos', AlunoController::class)->parameters(['alunos' => 'aluno']);
+    Route::get('/alunos/{aluno}/caderneta', [CadernetaController::class, 'show'])->name('alunos.caderneta');
 
     Route::resource('ocorrencias', OcorrenciaController::class)
         ->parameters(['ocorrencias' => 'ocorrencia'])
