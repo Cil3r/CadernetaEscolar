@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Falta extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['aluno_id', 'user_id', 'data', 'justificada', 'motivo'];
 
     protected function casts(): array
